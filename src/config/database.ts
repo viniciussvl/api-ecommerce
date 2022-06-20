@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const dbUser = process.env.DB_USER;
-const dbPassword = process.env.DB_PASSWORD;
+const dbPassword = process.env.DB_PASS;
 const dbName = process.env.DB_name;
 
 const connect = function() {
@@ -9,7 +9,7 @@ const connect = function() {
     .then(() => {
         console.log('Conectado ao MongoDB');
     })
-    .catch((error) => {
+    .catch((error: any) => {
         console.log(error);
     })
 }

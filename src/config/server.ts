@@ -1,15 +1,20 @@
+require('dotenv').config();
+
 import express from 'express';
 import helmet from 'helmet';
-
-require('dotenv').config();
+import routes from '../routes';
 
 const app = express();
 
-const authRoutes = require('../routes/auth');
 const initServer = () => {
     app.use(helmet());
     app.use(express.json());
-    app.use('/auth', authRoutes);
+    app.use(routes);
+
+    app.get('/', (req, res) => {
+        res.status(200).json({ message: 'API Funcionando', status: 'OK' })
+    })
+    
     return app;
 }
 
