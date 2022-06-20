@@ -18,6 +18,6 @@ const initServer = () => {
     return app;
 }
 
-module.exports = {
+export default { 
     initServer
-}
+};
