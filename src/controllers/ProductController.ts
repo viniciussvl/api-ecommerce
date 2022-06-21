@@ -5,11 +5,11 @@ class ProductController {
 
     public async index(req: Request, res: Response) {
         try {
-            const products = await productService.getProducts();
+            const products = await productService.getActiveProducts();
             res.status(200).json({ products: products });
+
         } catch (error: any) {
-            console.log(error);
-            res.status(400).json({ error: error.message })
+            res.status(error.status).json({ error: error.message })
         }
     }
 
@@ -18,8 +18,9 @@ class ProductController {
         try {
             const product = await productService.getProduct(id);
             res.status(200).json(product);
+
         } catch (error: any) {
-            res.status(400).json({ error: error.message })
+            res.status(error.status).json({ error: error.message })
         }
     }
 
@@ -34,20 +35,44 @@ class ProductController {
         }
         
         try {
-            const products = await productService.createProduct(data);
-            res.status(200).json(products);
+            const product = await productService.createProduct(data);
+            res.status(200).json({ message: 'Product created successfully', product: product });
+
         } catch (error: any) {
-            console.log(error);
-            res.status(400).json({ error: error.message })
+            res.status(error.status).json({ error: error.message })
         }
     }
 
     public async update(req: Request, res: Response) {
+        const id = req.params.id;
+        const { name, price, status, description } = req.body;
 
+        const data = {
+            name,
+            price,
+            description,
+            status
+        }
+
+        try {
+            await productService.updateProduct(id, data);
+            res.status(201).json({ message: 'Product updated', product: data });
+
+        } catch(error: any) {
+            res.status(error.status).json({ error: error.message });
+        }
     }
 
     public async destroy(req: Request, res: Response) {
+        const id = req.params.id;
+        
+        try {
+            await productService.deleteProduct(id);
+            res.status(200).json({ message: `Product ${id} deleted` });
 
+        } catch (error: any) {
+            res.status(error.status).json({ error: error.message });
+        }
     }
 }
 
