@@ -1,10 +1,20 @@
+import Product from "../models/Product";
 import BaseRepository from "./BaseRepository";
 
 interface IProductRepository {
 
 }
 
-class ProductRepository extends BaseRepository implements IProductRepository {
+class ProductRepository implements IProductRepository {
+    async find(filter: Object) {
+        const products = await Product.find(filter).exec();
+        return products;
+    }
+
+    async findById() {
+
+    }
+
     
 }
 

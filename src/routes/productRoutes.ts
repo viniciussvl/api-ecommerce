@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import ProductController from '../controllers/ProductController';
+import { productController }  from '../controllers/ProductController';
 
 const productRoutes = Router();
 
-productRoutes.get('/', ProductController.index)
-productRoutes.get('/:id', ProductController.show)
-productRoutes.post('/', ProductController.store)
-productRoutes.put('/:id', ProductController.update)
-productRoutes.delete('/:id', ProductController.destroy)
+productRoutes.get('/', (req, res) => { productController.index(req, res) })
+productRoutes.get('/:id', (req, res) =>{ productController.show(req, res) })
+productRoutes.post('/', (req, res) =>{ productController.store(req, res) })
+productRoutes.put('/:id', (req, res) =>{ productController.update(req, res) })
+productRoutes.delete('/:id',(req, res) => { productController.destroy(req, res) })
 
 export default productRoutes;
