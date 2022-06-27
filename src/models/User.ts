@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-    name: {
+    firstName: {
+        type: String,
+        require: true
+    },
+    lastName: {
         type: String,
         require: true
     },
@@ -12,21 +16,13 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        require: true,
-        select: false
+        require: true
     },
-    verificationAt: {
-        type: Date,
-    }
 },
 {
     timestamps: true
 })
 
-UserSchema.pre('save', function(next) {
-    // faça alguma coisa em algum campo antes de SALVAR
-})
-
 const User = mongoose.model('User', UserSchema);
 
-module.exports = User;
+export default User;
