@@ -1,22 +1,16 @@
-import { CreateProductDto } from "../dto/product/CreateProductDto";
-import UpdateProductDto from "../dto/product/UpdateProductDto";
+import ProductDto from "../dto/ProductDto";
 import HttpException from "../exceptions/HttpException";
 import Product from "../models/Product";
-import ProductRepository from "../repositories/ProductRepository";
 
 interface IProductService {
-    createProduct(data: Object): void;
-    updateProduct(id: String, data: Object): Promise<void>;
+    createProduct(data: ProductDto): void;
+    updateProduct(id: String, data: ProductDto): Promise<void>;
     deleteProduct(id: String): Promise<void>;
     getProduct(id: String): Promise<Object>;
     getActiveProducts(): void;
 }
 
 class ProductService implements IProductService {
-
-    constructor() {
-
-    }
 
     async getProduct(id: String): Promise<Object> {
         const product = await Product.findOne({ _id: id });
@@ -28,18 +22,21 @@ class ProductService implements IProductService {
     }
 
     async getActiveProducts() {
-        const products = await this.productRepository.find({ status: true }).exec();
+        const products = await Product.find({ status: true }).exec();
         return products;
     }
 
-    async createProduct(data: CreateProductDto)  {
+    async createProduct(data: ProductDto)  {
         const product = await Product.create(data);
         return product;
     }
 
-    async updateProduct(id: String, data: UpdateProductDto): Promise<void> {
+    async updateProduct(id: String, data: ProductDto): Promise<void> {
         
-        await this.checkProductExists(id);
+        const productExists = await this.checkProductExists(id);
+        if(!productExists) {
+            throw new Error('Product not found');
+        }
 
         const productUpdated = await Product.updateOne({ _id: id }, data);
         if(!productUpdated.modifiedCount) {
@@ -49,7 +46,10 @@ class ProductService implements IProductService {
 
     async deleteProduct(id: String): Promise<void> {
 
-        await this.checkProductExists(id);
+        const productExists = await this.checkProductExists(id);
+        if(!productExists) {
+            throw new Error('Product not found');
+        }
 
         const deletedProduct = await Product.deleteOne({ _id: id });
         if(deletedProduct.deletedCount === 0) {
@@ -57,12 +57,14 @@ class ProductService implements IProductService {
         }
     }
 
-    private async checkProductExists(id: String) {
+    private async checkProductExists(id: String): Promise<boolean> {
         const productExists = await Product.findById({ _id: id });
-        if(!productExists) {
-            throw new HttpException(404, 'Product not found');
+        if(productExists) {
+            return true;
         }
+
+        return false;
     }
 }
 
-export default ProductService
+export default ProductService;
