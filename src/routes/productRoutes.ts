@@ -3,10 +3,10 @@ import ProductController from '../controllers/ProductController';
 
 const productRoutes = Router();
 
-productRoutes.get('/', ProductController.index)
-productRoutes.get('/:id', ProductController.show)
-productRoutes.post('/', ProductController.store)
-productRoutes.put('/:id', ProductController.update)
-productRoutes.delete('/:id', ProductController.destroy)
+productRoutes.get('/', (req, res) => { ProductController.index(req, res) })
+productRoutes.get('/:id', (req, res) =>{ ProductController.show(req, res) })
+productRoutes.post('/', (req, res) =>{ ProductController.store(req, res) })
+productRoutes.put('/:id', (req, res) =>{ ProductController.update(req, res) })
+productRoutes.delete('/:id',(req, res) => { ProductController.destroy(req, res) })
 
 export default productRoutes;

@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
 
 class Database {
-    private dbUser: any;
-    private dbPassword: any;
-    private dbName: any;
+    private host: any;
 
     constructor() {
-        this.dbUser = process.env.DB_USER;
-        this.dbPassword = process.env.DB_PASS;
-        this.dbName = process.env.DB_NAME;
+        this.host = process.env.DB_HOST;
     }
 
     async connect(): Promise<void> {
-        mongoose.connect(`mongodb+srv://${this.dbUser}:${this.dbPassword}@${this.dbName}.knwqpw3.mongodb.net/?retryWrites=true&w=majority`)
+        mongoose.connect(this.host)
         .then(() => {
             console.log('Conectado ao MongoDB');
         })
@@ -24,7 +20,7 @@ class Database {
     async disconnect(): Promise<void> {
         mongoose.disconnect()
         .then(() => {
-            console.log('Desconectado do mongo')
+            console.log('Desconectado do MongoDB')
         }) 
         .catch((error: any) => {
             console.log(error);

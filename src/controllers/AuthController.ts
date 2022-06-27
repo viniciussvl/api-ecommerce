@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import MailService from "../services/MailService";
 
 export default {
     async login(req: Request, res: Response) {
