@@ -1,15 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { check, validationResult } from 'express-validator';
-import formatValidatorErrors from '../../utils/'
+import CategoryService from '../../services/CategoryService';
+import formatValidatorErrors from '../../utils/formatValidatorErrors'
 
-
-const ProductValidator = [
+const productValidator = [
     check('name').isLength({ min: 3, max: 150 }),
-    check('content').isLength({ min: 6 }).withMessage('Mininum length is 6'),
+    check('price').isNumeric(),
+    check('description').isLength({ min: 6, max: 255 }).withMessage('Length between 6 and 255'),
     check('categoryId').isMongoId().withMessage('Invalid category id').bail()
-    .custom(async (value) => {
+    .custom(async (categoryId) => {
         try {
-            const category = await Category.findById(value);
+            const categoryService = new CategoryService();
+            await categoryService.getCategory(categoryId);
         } catch (error) {
             throw new Error('Category not found');
         }
@@ -27,4 +29,4 @@ const ProductValidator = [
     }
 ];
 
-export default ProductValidator;
+module.exports = productValidator;

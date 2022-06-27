@@ -24,6 +24,10 @@ const ProductSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String,
+    },
+    categoryId: {
+        type: String,
+        require: true
     }
 },
 {
@@ -32,7 +36,7 @@ const ProductSchema = new mongoose.Schema({
 
 ProductSchema.pre('save', function(next) {
     this.slug = slugify(this.name as string);
-
+    
     next();
 })
 

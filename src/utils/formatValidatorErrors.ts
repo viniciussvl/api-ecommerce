@@ -5,8 +5,8 @@
  * @returns 
  */
 
- const common = function(errors) {
-    return errors.map(function (item) {
+ const common = function(errors: Array<Object>) {
+    return errors.map(function (item: any) {
         if(!item.msg) {
             throw new Error('Undefined msg property');
         }
