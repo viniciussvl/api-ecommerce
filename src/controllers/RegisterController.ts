@@ -10,6 +10,14 @@ class RegisterController {
         this.userService = new UserService();
     }
 
+    /** The RegisterController is single-action and has only one public method, execute(). 
+     * It just creates the user in the database.
+     * 
+     * @param {Request} req Request express
+     * @param {Response} res Response express
+     * @returns 
+     * Returns a 200 status and success message
+     */
     async execute(req: Request, res: Response) {
         const data = req.body as RegisterUserDto;
         

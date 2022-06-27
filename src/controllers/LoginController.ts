@@ -12,6 +12,16 @@ class LoginController {
         this.userService = new UserService();
     }
 
+    /** The LoginController is single-action and has only one public method, execute(). 
+     * Where it verifies the existence of the 
+     * user and authenticates the user, signing a jwt token.
+     * 
+     * @param {Request} req Request express
+     * @param {Response} res Response express
+     * @returns 
+     * Returns a 200 status and JWT token on success.
+     */
+    
     async execute(req: Request, res: Response) {
         const { email, password } = req.body;
 
@@ -26,7 +36,7 @@ class LoginController {
             const token = jwt.sign({ userId: user._id }, secret);
 
             res.status(200).json({ token: token, message: 'Authenticated successfully' });
-            
+
         } catch (error: any) {
             console.log(error);
 
@@ -34,6 +44,14 @@ class LoginController {
         }
     }
 
+    /** This private method has the responsibility of 
+     * comparing and validating a hash with the plain text password.
+     * 
+     * @param {string} password plain text password
+     * @param {string} hash bcrypt hash
+     * @returns 
+     * Include status code in Error Exception
+     */
     private async comparePasswordWithHash(password: string, hash: string): Promise<Boolean> {
         try {
             const compare = await bcrypt.compare(password, hash);
