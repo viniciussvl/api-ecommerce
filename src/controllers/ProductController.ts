@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import ProductDto from "../dto/ProductDto";
 import ProductService from "../services/ProductService";
 
 class ProductController {
@@ -30,14 +31,7 @@ class ProductController {
     }
 
     public async store(req: Request, res: Response) {
-        const { name, price, status, description } = req.body;
-
-        const data = {
-            name,
-            price,
-            description,
-            status
-        }
+        const data = req.body as ProductDto;
         
         try {
             const product = await this.productService.createProduct(data);
@@ -50,15 +44,8 @@ class ProductController {
 
     public async update(req: Request, res: Response) {
         const id = req.params.id;
-        const { name, price, status, description } = req.body;
-
-        const data = {
-            name,
-            price,
-            description,
-            status
-        }
-
+        const data = req.body as ProductDto;
+        
         try {
             await this.productService.updateProduct(id, data);
             res.status(201).json({ message: 'Product updated', product: data });
