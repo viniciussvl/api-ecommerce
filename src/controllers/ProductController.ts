@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import IQueryParams from "../common/interfaces/IQueryParams";
 import ProductDto from "../dto/ProductDto";
 import ProductService from "../services/ProductService";
 
@@ -10,8 +11,10 @@ class ProductController {
     }
 
     public async index(req: Request, res: Response) {
+        const queryParams = req.body.queryParams;
+
         try {
-            const products = await this.productService.getActiveProducts();
+            const products = await this.productService.getProducts(queryParams);
             res.status(200).json({ products: products });
 
         } catch (error: any) {
