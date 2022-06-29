@@ -1,3 +1,4 @@
+import IQueryParams from "../common/interfaces/IQueryParams";
 import ProductDto from "../dto/ProductDto";
 import HttpException from "../exceptions/HttpException";
 import Product from "../models/Product";
@@ -7,7 +8,7 @@ interface IProductService {
     updateProduct(id: String, data: ProductDto): Promise<void>;
     deleteProduct(id: String): Promise<void>;
     getProduct(id: String): Promise<Object>;
-    getActiveProducts(): void;
+    getProducts(queryParams: IQueryParams): void;
 }
 
 class ProductService implements IProductService {
@@ -21,8 +22,9 @@ class ProductService implements IProductService {
         return product;
     }
 
-    async getActiveProducts() {
-        const products = await Product.find({ status: true }).exec();
+    async getProducts(queryParams: IQueryParams) {
+        console.log(queryParams);
+        const products = await Product.find({ status: true });
         return products;
     }
 
