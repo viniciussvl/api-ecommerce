@@ -28,6 +28,10 @@ const ProductSchema = new mongoose.Schema({
     categoryId: {
         type: String,
         require: true
+    },
+    userId: {
+        type: String,
+        require: true
     }
 },
 {

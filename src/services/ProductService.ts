@@ -23,18 +23,17 @@ class ProductService implements IProductService {
     }
 
     async getProducts(queryParams: IQueryParams) {
-        console.log(queryParams);
+        const limit = queryParams.perPage;
+        const page = queryParams.page;
 
         let sortObject = {}
         const sortBy = queryParams.sortBy;
         sortObject[sortBy] = queryParams.sort;
-        
-        console.log(queryParams.perPage * queryParams.page);
 
         const products = await Product.find({ status: true })
         .sort(sortObject)
-        .limit(queryParams.perPage)
-        .skip(queryParams.perPage * queryParams.page)
+        .limit(limit)
+        .skip((page  - 1) * limit)
         .exec();
 
         const totalProducts = await Product.find({ status: true }).count();

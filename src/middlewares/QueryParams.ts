@@ -17,7 +17,7 @@ class QueryParams {
             page: isNaN(page) ? 1 : page,
             search: (search) ?? '',
             sort: sortDirection,
-            sortBy: (sortBy) ?? 'id'
+            sortBy: (sortBy) ?? '_id'
         };
 
         next();

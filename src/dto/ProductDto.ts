@@ -5,5 +5,6 @@ export default interface ProductDto {
     price: Number,
     imageUrl?: string,
     status: boolean,
-    categoryId: string
+    categoryId: string,
+    userId: string
 }
