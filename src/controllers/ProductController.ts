@@ -15,7 +15,7 @@ class ProductController {
 
         try {
             const products = await this.productService.getProducts(queryParams);
-            res.status(200).json({ products: products });
+            res.status(200).json(products);
 
         } catch (error: any) {
             res.status(error.status).json({ error: error.message })

@@ -5,7 +5,7 @@ class QueryParams {
         const { search, sort, sortBy } = req.query;
         const page = parseInt(req.query.page as string);
         const perPage = parseInt(req.query.perPage as string);
-        const sortDirection = (sort && sort == 'asc') ?? 'desc'
+        const sortDirection = (sort && sort == 'asc') ? 'asc' : 'desc';
 
         if(perPage > 30) {
             res.status(400).json({ error: 'Items per page must not be greater than 20' });
@@ -17,7 +17,7 @@ class QueryParams {
             page: isNaN(page) ? 1 : page,
             search: (search) ?? '',
             sort: sortDirection,
-            sortBy: (sortBy) ?? 'id'
+            sortBy: (sortBy) ?? '_id'
         };
 
         next();
