@@ -3,11 +3,12 @@ import User from "../models/User";
 import bcrypt from 'bcrypt';
 import HttpException from "../exceptions/HttpException";
 
-interface IUserService {
+interface UserServiceImp {
     create(data: RegisterUserDto): Promise<Object>;  
+    findByEmail(email: string): Promise<Object>;  
 }
 
-class UserService implements IUserService {
+class UserService implements UserServiceImp {
     async create(data: RegisterUserDto): Promise<Object> {
         const hash = await bcrypt.hash(data.password, 10);
         data.password = hash;

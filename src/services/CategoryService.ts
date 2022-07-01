@@ -2,7 +2,7 @@ import CategoryDto from "../dto/CategoryDto";
 import HttpException from "../exceptions/HttpException";
 import Category from "../models/Category";
 
-interface ICategoryService {
+interface CategoryServiceImp {
     getAllCategories(): Promise<Object>;
     getCategory(id: String): Promise<Object>;
     create(data: CategoryDto): Promise<Object>;
@@ -10,7 +10,7 @@ interface ICategoryService {
     delete(id: String): Promise<Boolean>;
 }
 
-class CategoryService implements ICategoryService {
+class CategoryService implements CategoryServiceImp {
     async getAllCategories(): Promise<Object> {
         const categories = await Category.find().exec();
         return categories;

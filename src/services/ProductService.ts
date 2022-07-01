@@ -3,7 +3,7 @@ import ProductDto from "../dto/ProductDto";
 import HttpException from "../exceptions/HttpException";
 import Product from "../models/Product";
 
-interface IProductService {
+interface ProductServiceImp {
     createProduct(data: ProductDto): void;
     updateProduct(id: String, data: ProductDto): Promise<void>;
     deleteProduct(id: String): Promise<void>;
@@ -11,7 +11,7 @@ interface IProductService {
     getProducts(queryParams: IQueryParams): void;
 }
 
-class ProductService implements IProductService {
+class ProductService implements ProductServiceImp {
 
     async getProduct(id: String): Promise<Object> {
         const product = await Product.findOne({ _id: id });
