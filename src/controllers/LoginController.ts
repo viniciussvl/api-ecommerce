@@ -35,7 +35,16 @@ class LoginController {
             const secret: any = process.env.JWT_SECRET;
             const token = jwt.sign({ userId: user._id }, secret);
 
-            res.status(200).json({ token: token, message: 'Authenticated successfully' });
+            res.status(200).json({ 
+                message: 'Authenticated successfully', 
+                user: { 
+                    email: user.email, 
+                    _id: user.id, 
+                    firstName: user.firstName, 
+                    lastName: user.lastName 
+                }, 
+                token: token 
+            });
 
         } catch (error: any) {
             console.log(error);
