@@ -7,7 +7,7 @@ import QueryParams from '../middlewares/QueryParams';
 const productValidator = require('../middlewares/validators/ProductValidator');
 const productRoutes = Router();
 
-productRoutes.get('/', [QueryParams.execute], (req: Request, res: Response) => { ProductController.index(req, res) })
+productRoutes.get('/', [Authentication.check, Authorization.check, QueryParams.execute], (req: Request, res: Response) => { ProductController.index(req, res) })
 productRoutes.get('/:id', (req, res) => { ProductController.show(req, res) })
 
 productRoutes.post('/', [Authentication.check, productValidator, Authorization.check], (req: Request, res: Response) => { ProductController.store(req, res) })
