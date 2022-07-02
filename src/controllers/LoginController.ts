@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import UserService from "../services/UserService";
-import bcrypt from "bcrypt";
-import HttpException from "../exceptions/HttpException";
-import jwt from "jsonwebtoken";
+import { Request, Response } from 'express';
+import UserService from '../services/UserService';
+import bcrypt from 'bcrypt';
+import HttpException from '../exceptions/HttpException';
+import jwt from 'jsonwebtoken';
 
 class LoginController {
   private userService: UserService;
@@ -31,14 +31,14 @@ class LoginController {
         user.password
       );
       if (!correctPassword) {
-        throw new HttpException(422, "Invalid password");
+        throw new HttpException(422, 'Invalid password');
       }
 
       const secret: any = process.env.JWT_SECRET;
       const token = jwt.sign({ userId: user._id }, secret);
 
       res.status(200).json({
-        message: "Authenticated successfully",
+        message: 'Authenticated successfully',
         user: {
           email: user.email,
           _id: user.id,
@@ -75,7 +75,7 @@ class LoginController {
       return true;
     } catch (error) {
       console.log(error);
-      throw new HttpException(500, "Internal Server Error");
+      throw new HttpException(500, 'Internal Server Error');
     }
   }
 }
