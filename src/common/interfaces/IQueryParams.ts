@@ -1,7 +1,7 @@
 export default interface IQueryParams {
-    search?: String,
-    page?: String,
-    perPage?: String,
-    sort?: String,
-    sortBy?: String
+  search?: String;
+  page?: String;
+  perPage?: String;
+  sort?: String;
+  sortBy?: String;
 }
