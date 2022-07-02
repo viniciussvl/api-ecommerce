@@ -3,18 +3,18 @@
  * normalizing to NFKD (unicode normalization form), 
  * replacing spaces with - and removing non-word characters.
  * 
- * @param {String} text 
+ * @param {string} text 
  * @returns A string in slug format
  */
- const slugify = function(text: String) {
+ const slugify = function(text: string, separator: string = '-') {
     return text
     .toString()                          
     .normalize('NFKD')           
     .toLowerCase()                  
     .trim()                                 
-    .replace(/\s+/g, '-')            
+    .replace(/\s+/g, separator)            
     .replace(/[^\w\-]+/g, '')     
-    .replace(/\-\-+/g, '-'); 
+    .replace(/\-\-+/g, separator); 
 } 
 
 export default slugify;
